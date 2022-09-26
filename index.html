@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>鼓声回响</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://CLL-XX.github.io/favicon.ico?v=1664127478079">
+<link rel="stylesheet" href="https://CLL-XX.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前者让我看到时间的流逝，后者却让我感觉到时间的停滞">
+    
+    <style type="text/css">
+    ::-webkit-scrollbar-thumb { /*滚动条滑块*/
+        background-color: rgb(185 25 3); /*滑块颜色*/
+        border-radius: 5px; /*设置圆角*/
+    }
+    ::-webkit-scrollbar-track { /*滚动条滑槽*/
+        border-radius: 5px; /*设置圆角*/
+    }
+    ::-webkit-scrollbar { /*滚动条大小*/
+        width: 5px; /*竖向滚动条的宽度*/
+        height: 8px; /*横向滚动条的高度*/
+    }
+    </style>
+    
+  </head>
+  <body>
+    <!--夜间模式开始-->
+
+<style>
+    .set-view-mode { /*正常模式下按钮总体样式*/
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        z-index: 300;
+        background: #000000;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        -moz-border-radius: 10px;
+        color: #FFFFFF;
+        opacity: .8;
+        text-align: center;
+    }
+    .set-view-mode i { /*正常模式下按钮图标样式*/
+        width: 100%;
+        height: 100%;
+        display: block;
+        line-height: 30px;
+        font-size: 20px;
+        color: #FFFFFF;
+    }
+    .cover{ /*正常模式下遮罩样式（应设置为全透明）*/
+        position:fixed;
+        top: 0px;
+        left: 0px;
+        outline:5000px solid rgba(0, 0, 0, 0);
+        z-index: 99999;
+    }
+    .night-mode .set-view-mode { /*夜间模式下按钮总体样式*/
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        z-index: 300;
+        background: #FFFFFF;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        -moz-border-radius: 10px;
+        color: #000000;
+        opacity: .8;
+        text-align: center;
+    }
+    .night-mode .set-view-mode i { /*夜间模式下按钮图标样式*/
+        width: 100%;
+        height: 100%;
+        display: block;
+        line-height: 30px;
+        font-size: 20px;
+        color: #c07c7c;
+    }
+    .night-mode .cover{ /*夜间模式下遮罩样式（应设置为黑色半透明）*/
+        position:fixed;
+        top: 0px;
+        left: 0px;
+        outline:5000px solid rgba(180, 21, 21, 0.3); 
+        z-index: 99999;
+    }
+    </style>
+    
+    <div class="cover"></div>
+    <a class="set-view-mode" href="javascript:void(0)" title="夜间模式">
+        <i class="fa fa-moon-o"></i>
+    </a>
+    
+    <script>
+    $(function(){
+        btn = $('.set-view-mode');
+        if(sessionStorage.mode=="night"){
+            $('body').addClass('night-mode');
+            btn.find('i').attr('class','fa fa-sun-o');
+        }
+        $('.set-view-mode').click(function(){
+            var next_mode = $('body').hasClass('night-mode') ? 'day':'night';
+            if(next_mode!='day'){
+                $('body').addClass('night-mode');
+                btn.find('i').attr('class','fa fa-sun-o');
+                sessionStorage.mode="night";
+            }else{
+                $('body').removeClass('night-mode');
+                btn.find('i').attr('class','fa fa-moon-o');
+                sessionStorage.mode="day";
+            }
+        });
+    });
+    </script>
+    
+    <!--夜间模式结束-->
+    
+
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://CLL-XX.github.io">
+        <img src="https://CLL-XX.github.io/images/avatar.png?v=1664127478079" class="site-logo">
+        <h1 class="site-title">鼓声回响</h1>
+        <h2 class="site-subtitle">一个人的思想发育史就是他的阅读史</h2>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            😷 鼓聲回响
+          </a>
+        
+      
+        
+          <a href="/tag/wen-xue" class="site-nav">
+            🧻 讀三頁紙
+          </a>
+        
+      
+        
+          <a href="tag/dian-ying" class="site-nav">
+            🎞️ 反復觀影
+          </a>
+        
+      
+        
+          <a href="https://CLL-XX.github.io/archives" class="site-nav">
+            🪠 行为不端
+          </a>
+        
+      
+        
+          <a href="https://CLL-XX.github.io" class="site-nav">
+            🪞 反光鏡
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            🎠 一年一年
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            👩‍💻 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="@" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      前者让我看到时间的流逝，后者却让我感觉到时间的停滞
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://CLL-XX.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://CLL-XX.github.io/post/cll-di-yi-pian-wen-zhang-ce-shi/">
+                  <h2 class="post-title">CLL第一篇文章测试</h2>
+                </a>
+                <div class="post-date">
+                  Sep
+                </div>
+                <div class="post-abstract">
+                  <p>🏳️‍🌈🏁🍊</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://CLL-XX.github.io/post/cll-di-yi-pian-wen-zhang-ce-shi/">
+                  <div class="feature-container" style="background-image: url('https://CLL-XX.github.io/post-images/cll-di-yi-pian-wen-zhang-ce-shi.JPG')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://CLL-XX.github.io/post/ge-da-er-xuan-ze-an-le-si-chi-shi/">
+                  <h2 class="post-title">#戈达尔选择安乐死离世</h2>
+                </a>
+                <div class="post-date">
+                  Sep
+                </div>
+                <div class="post-abstract">
+                  <p><code>  </code>   对我影响很大的两部电影，分别是安哲的《永恒和一日》和戈达尔的《精疲力尽》。前者让我看到时间的流逝，后者却让我感觉到时间的停滞。</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://CLL-XX.github.io/post/ge-da-er-xuan-ze-an-le-si-chi-shi/">
+                  <div class="feature-container" style="background-image: url('https://CLL-XX.github.io/post-images/ge-da-er-xuan-ze-an-le-si-chi-shi.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://CLL-XX.github.io/post/hello-gridea/">
+                  <h2 class="post-title">Hello Gridea</h2>
+                </a>
+                <div class="post-date">
+                  Dec
+                </div>
+                <div class="post-abstract">
+                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://CLL-XX.github.io/post/hello-gridea/">
+                  <div class="feature-container" style="background-image: url('https://CLL-XX.github.io/post-images/hello-gridea.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">
+      <sup style="color:grey">总访问量<span id="busuanzi_value_site_pv"></span>次</sup>
+    </span>
+    </span>
+  </body>
+</html>
